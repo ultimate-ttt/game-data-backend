@@ -8,14 +8,16 @@ This allows us to get insights into how our users play this game.
 Once we gathered data from at least a few hundred games we will start to give this data back to the open source community.
 
 ## Privacy
-Only the following is saved about a game: 
+Only the following data is saved about a game: 
 
 ```
+{
   date
   winner
   gameState
   moves
   isReplay
+}
 ```
 
 ## Contribute

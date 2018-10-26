@@ -1,8 +1,0 @@
-language: node_js
-node_js:
-  - "stable"
-script:
-  - npm run build
-notifications:
-  email: false
-  webhooks: https://www.travisbuddy.com/?insertMode=update

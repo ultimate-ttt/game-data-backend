@@ -65,9 +65,9 @@ module.exports = function (context, req) {
                 context.log.error(err);
             }
             context.log.info("Inserted 1 document into the collection");
+            
+            client.close();
+            context.done();
         });
-
-        client.close();
-        context.done();
     });
 };

@@ -4,7 +4,7 @@ const connectionString = process.env.mongoDbConnection;
 const dbName = 'ultimatettt-analytics';
 const collectionName = 'gameData';
 
-setBadRequest = (context, message) => {
+const setBadRequest = (context, message) => {
     context.log.info(message);
     context.res = {
         status: 400,

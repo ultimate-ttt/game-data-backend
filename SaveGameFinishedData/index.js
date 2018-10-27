@@ -4,7 +4,7 @@ const connectionString = process.env.mongoDbConnection;
 const dbName = 'ultimatettt-analytics';
 const collectionName = 'gameData';
 
-returnBadRequest = (context, message) => {
+const setBadRequest = (context, message) => {
     context.log.info(message);
     context.res = {
         status: 400,
@@ -13,7 +13,7 @@ returnBadRequest = (context, message) => {
     context.done();
 }
 
-module.exports = function (context, req) {
+module.exports = function (context, req) {    
     const date = new Date(Date.now()).toISOString();
     const isReplay = req.body.isReplay;
     const gameState = req.body.gameState;
@@ -21,21 +21,25 @@ module.exports = function (context, req) {
     const moves = req.body.moves;
 
     if(isReplay === undefined || isReplay === null || typeof isReplay !== 'boolean') {
-        returnBadRequest(context, "property isReplay should be defined and be a boolean");
+        setBadRequest(context, "property isReplay should be defined and be a boolean");
+        return;
     }
 
     if(gameState === undefined || gameState === null || !Array.isArray(gameState) || gameState.length === 0) {
-        returnBadRequest(context, "property gameState should be defined and be an array with elements");
+        setBadRequest(context, "property gameState should be defined and be an array with elements");
+        return;
     }
 
     if(moves === undefined || moves === null || !Array.isArray(moves || moves.length === 0)) {
-        returnBadRequest(context, "property moves should be defined and be an array with elements");
+        setBadRequest(context, "property moves should be defined and be an array with elements");
+        return;
     }
 
     if(winner === undefined || (typeof winner !== 'string' && winner !== null) || 
         (winner !== "Y" && winner !== "X" && winner !== null)) {
-        returnBadRequest(context,
+        setBadRequest(context,
             "property winner should be defined, be a string and only have the value X, Y or null");
+        return;
     }
 
     const gameObject = {

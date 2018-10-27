@@ -14,6 +14,8 @@ returnBadRequest = (context, message) => {
 }
 
 module.exports = function (context, req) {
+    context.log.verbose(mongoDbConnection);
+    
     const date = new Date(Date.now()).toISOString();
     const isReplay = req.body.isReplay;
     const gameState = req.body.gameState;

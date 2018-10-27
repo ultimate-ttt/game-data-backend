@@ -44,10 +44,10 @@ module.exports = function (context, req) {
 
     const gameObject = {
         date,
+        winner
         isReplay,
         gameState,
         moves,
-        winner
     };
 
     MongoClient.connect(connectionString, function(err, client) {

@@ -36,9 +36,9 @@ module.exports = function (context, req) {
     }
 
     if(winner === undefined || (typeof winner !== 'string' && winner !== null) || 
-        (winner !== "Y" && winner !== "X" && winner !== null)) {
+        (winner !== "O" && winner !== "X" && winner !== null)) {
         setBadRequest(context,
-            "property winner should be defined, be a string and only have the value X, Y or null");
+            "property winner should be defined, be a string and only have the value X, O or null");
         return;
     }
 

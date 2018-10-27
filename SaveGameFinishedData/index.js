@@ -13,9 +13,7 @@ returnBadRequest = (context, message) => {
     context.done();
 }
 
-module.exports = function (context, req) {
-    context.log.verbose(connectionString);
-    
+module.exports = function (context, req) {    
     const date = new Date(Date.now()).toISOString();
     const isReplay = req.body.isReplay;
     const gameState = req.body.gameState;

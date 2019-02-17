@@ -16,7 +16,6 @@ Only the following data is saved about a game:
   winner
   gameState
   moves
-  isReplay
 }
 ```
 

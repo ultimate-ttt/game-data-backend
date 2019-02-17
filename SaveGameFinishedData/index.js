@@ -11,16 +11,16 @@ const setBadRequest = (context, message) => {
         body: message
     };
     context.done();
-}
+};
 
-module.exports = function (context, req) {    
+module.exports = function (context, req) {
     const date = new Date(Date.now()).toISOString();
-    const gameState = req.body.gameState;
+    const game = req.body.gameState;
     const winner = req.body.winner;
     const moves = req.body.moves;
 
-    if(gameState === undefined || gameState === null || !Array.isArray(gameState) || gameState.length === 0) {
-        setBadRequest(context, "property gameState should be defined and be an array with elements");
+    if(game === undefined || game === null || !Array.isArray(game) || game.length === 0) {
+        setBadRequest(context, "property game should be defined and be an array with elements");
         return;
     }
 
@@ -29,7 +29,7 @@ module.exports = function (context, req) {
         return;
     }
 
-    if(winner === undefined || (typeof winner !== 'string' && winner !== null) || 
+    if(winner === undefined || (typeof winner !== 'string' && winner !== null) ||
         (winner !== "O" && winner !== "X" && winner !== null)) {
         setBadRequest(context,
             "property winner should be defined, be a string and only have the value X, O or null");
@@ -38,8 +38,8 @@ module.exports = function (context, req) {
 
     const gameObject = {
         date,
-        winner
-        gameState,
+        winner,
+        gameState: game,
         moves,
     };
 
@@ -62,7 +62,7 @@ module.exports = function (context, req) {
                 context.log.error(err);
             }
             context.log.info("Inserted 1 document into the collection");
-            
+
             client.close();
             context.done();
         });

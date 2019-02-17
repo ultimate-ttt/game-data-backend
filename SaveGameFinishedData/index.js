@@ -39,7 +39,6 @@ module.exports = function (context, req) {
     const gameObject = {
         date,
         winner
-        isReplay,
         gameState,
         moves,
     };

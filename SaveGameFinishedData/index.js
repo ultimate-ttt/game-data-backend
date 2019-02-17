@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const request = require('request');
 
 const connectionString = process.env.mongoDbConnection;
 const dbName = 'ultimatettt-analytics';
@@ -11,6 +12,11 @@ const setBadRequest = (context, message) => {
         body: message
     };
     context.done();
+};
+
+const sendPushNotification = (numberOfMoves, winner) => {
+    const baseUrl = process.env.baseUrl;
+    request.post(`${baseUrl}?value1=${numberOfMoves}&value2=${winner}`);
 };
 
 module.exports = function (context, req) {
@@ -35,7 +41,7 @@ module.exports = function (context, req) {
             "property winner should be defined, be a string and only have the value X, O or null");
         return;
     }
-
+    
     const gameObject = {
         date,
         winner,
@@ -67,4 +73,6 @@ module.exports = function (context, req) {
             context.done();
         });
     });
+
+    sendPushNotification(moves.length, winner);
 };

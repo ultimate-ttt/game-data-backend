@@ -15,15 +15,9 @@ const setBadRequest = (context, message) => {
 
 module.exports = function (context, req) {    
     const date = new Date(Date.now()).toISOString();
-    const isReplay = req.body.isReplay;
     const gameState = req.body.gameState;
     const winner = req.body.winner;
     const moves = req.body.moves;
-
-    if(isReplay === undefined || isReplay === null || typeof isReplay !== 'boolean') {
-        setBadRequest(context, "property isReplay should be defined and be a boolean");
-        return;
-    }
 
     if(gameState === undefined || gameState === null || !Array.isArray(gameState) || gameState.length === 0) {
         setBadRequest(context, "property gameState should be defined and be an array with elements");

@@ -48,7 +48,9 @@ module.exports = function (context, req) {
         gameState: game,
         moves,
     };
-
+    
+    sendPushNotification(moves.length, winner);
+    
     MongoClient.connect(connectionString, function(err, client) {
         if(err) {
             context.log.error(err);
@@ -56,23 +58,32 @@ module.exports = function (context, req) {
                 status: 500,
                 body: "there was an error while connecting to the database"
             };
+            context.done();
+            return;
         }
 
         context.log.info("Connected successfully to server");
 
         const db = client.db(dbName);
-
         const collection = db.collection(collectionName);
+        
         collection.insertOne(gameObject, function(err, result) {
             if(err) {
                 context.log.error(err);
+                context.res = {
+                    status: 500,
+                    body: "there was an error while inserting the gameData"
+                };
+                context.done();
+            } else {
+                context.log.info("Inserted 1 document into the collection");
+                context.res = { 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: gameObject._id
+                };
+                client.close();
+                context.done();
             }
-            context.log.info("Inserted 1 document into the collection");
-
-            client.close();
-            context.done();
         });
     });
-
-    sendPushNotification(moves.length, winner);
 };

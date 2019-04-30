@@ -14,9 +14,9 @@ const setBadRequest = (context, message) => {
     context.done();
 };
 
-const sendPushNotification = (numberOfMoves, winner) => {
+const sendPushNotification = (numberOfMoves, winner, functionName) => {
     const baseUrl = process.env.baseUrl;
-    request.post(`${baseUrl}?value1=${numberOfMoves}&value2=${winner}`);
+    request.post(`${baseUrl}?value1=${numberOfMoves}&value2=${winner}&value3=${functionName}`);
 };
 
 module.exports = function (context, req) {
@@ -49,7 +49,7 @@ module.exports = function (context, req) {
         moves,
     };
     
-    sendPushNotification(moves.length, winner);
+    sendPushNotification(moves.length, winner, context.executionContext.functionName);
     
     MongoClient.connect(connectionString, function(err, client) {
         if(err) {

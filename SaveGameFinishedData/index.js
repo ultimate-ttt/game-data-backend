@@ -16,7 +16,8 @@ const setBadRequest = (context, message) => {
 
 const sendPushNotification = (numberOfMoves, winner) => {
     const baseUrl = process.env.baseUrl;
-    request.post(`${baseUrl}?value1=${numberOfMoves}&value2=${winner}`);
+    const environment = process.env.environment;
+    request.post(`${baseUrl}?value1=${numberOfMoves}&value2=${winner}&value3=${environment}`);
 };
 
 module.exports = function (context, req) {
